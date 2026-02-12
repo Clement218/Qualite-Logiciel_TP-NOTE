@@ -1,11 +1,13 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/test-fixture';
 
+test.beforeEach(async ({ page }) => {
+  await page.goto('https://techhubecommerce.lovable.app/');
+});
+
 // Pour effectuer ces tests il est impératif de se connecter en 1er car l'authentification ne reste pas en mémoire
 
 test('Checkout - Livraison', async ({ page, auth, products, productDetail, cart, shipping }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
-
   await auth.loginTest();
   await products.goto();
   await products.openProduct('1');
@@ -21,8 +23,6 @@ test('Checkout - Livraison', async ({ page, auth, products, productDetail, cart,
 });
 
 test('Checkout - Paiement', async ({ page, auth, products, productDetail, cart, shipping, payment }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
-
   await auth.loginTest();
   await products.goto();
   await products.openProduct('1');

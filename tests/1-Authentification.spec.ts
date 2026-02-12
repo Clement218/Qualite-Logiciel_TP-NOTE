@@ -2,9 +2,12 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/test-fixture';
 import { faker } from '@faker-js/faker';
 
-test('Création de compte valide', async ({ page, auth }) => {
+// Je fais ça pour eviter de le remettre à chaque fois
+test.beforeEach(async ({ page }) => {
   await page.goto('https://techhubecommerce.lovable.app/');
+});
 
+test('Création de compte valide', async ({ page, auth }) => {
   const name = faker.person.fullName();
   const email = faker.internet.email();
   const password = faker.internet.password({ length: 8 });
@@ -12,10 +15,8 @@ test('Création de compte valide', async ({ page, auth }) => {
   await expect(auth.userMenu).toBeVisible();
 });
 
-// Pour ce test j'ai crée un compte en amont pour vérifier que ça fonctionne
+// Pour ce test j'ai crée et mis dans le Authentification.ts un compte en amont pour vérifier que ça fonctionne
 test('Login valide', async ({ page, auth }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
-
-  await auth.login('test.test@gmail.com', '123456');
+  await auth.loginTest();
   await expect(auth.userMenu).toBeVisible();
 });
