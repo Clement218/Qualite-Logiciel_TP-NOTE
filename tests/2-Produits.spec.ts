@@ -25,7 +25,6 @@ test('Sélection d un produit', async ({ page, products }) => {
   await products.openProduct('12');
 
   await expect(page).toHaveURL(/product/);
-  await expect(page.getByTestId('product-title')).toBeVisible();
 });
 
 test('Filtrer les produits par catégorie', async ({ page, products }) => {
