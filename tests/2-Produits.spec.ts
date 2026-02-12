@@ -1,8 +1,11 @@
 import { test } from '../fixtures/test-fixture';
 import { expect } from '@playwright/test';
 
+const { URL } = process.env;
+
+// Je fais ça pour eviter de le remettre à chaque fois
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
+  await page.goto(URL!);
 });
 
 test('Tous les boutons cliquables du header', async ({ page, products }) => {

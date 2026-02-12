@@ -1,8 +1,11 @@
 import { test } from '../fixtures/test-fixture';
 import { expect } from '@playwright/test';
 
+const { URL } = process.env;
+
+// Je fais ça pour eviter de le remettre à chaque fois
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
+  await page.goto(URL!);
 });
 
 // Pour effectuer ces tests il est impératif de se connecter en 1er car l'authentification ne reste pas en mémoire

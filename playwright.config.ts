@@ -1,4 +1,6 @@
 import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
 
 export default defineConfig({
   testDir: './tests',
@@ -8,3 +10,5 @@ export default defineConfig({
     video: 'retain-on-failure'
   },
 });
+
+dotenv.config({path: path.resolve(__dirname, 'env/.env')});

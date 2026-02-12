@@ -2,9 +2,11 @@ import { expect } from '@playwright/test';
 import { test } from '../fixtures/test-fixture';
 import { faker } from '@faker-js/faker';
 
+const { URL } = process.env;
+
 // Je fais ça pour eviter de le remettre à chaque fois
 test.beforeEach(async ({ page }) => {
-  await page.goto('https://techhubecommerce.lovable.app/');
+  await page.goto(URL!);
 });
 
 test('Création de compte valide', async ({ page, auth }) => {
