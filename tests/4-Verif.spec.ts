@@ -1,4 +1,5 @@
 import { test } from '../fixtures/test-fixture';
+import { expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('https://techhubecommerce.lovable.app/');
@@ -11,15 +12,20 @@ test('Checkout - Livraison', async ({ page, auth, products, productDetail, cart,
   await products.goto();
   await products.openProduct('1');
   await productDetail.addToCart();
+  await expect(page.getByTestId('cart-count')).toHaveText('1');
   await cart.open();
   await cart.goToCheckout();
+  await expect(page).toHaveURL(/checkout/i);
   await shipping.fillShipping({
     phone: '0011223344',
     address: '22 rue des champignons',
     city: 'boeufville',
     postal: '40'
   });
+ await expect(page.locator('text=Paiement sécurisé')).toBeVisible();
 });
+
+
 
 test('Checkout - Paiement', async ({ page, auth, products, productDetail, cart, shipping, payment }) => {
   await auth.loginTest();
@@ -40,4 +46,7 @@ test('Checkout - Paiement', async ({ page, auth, products, productDetail, cart, 
     expiry: '02/56',
     cvv: '789'
   });
+  await expect(
+    page.getByRole('heading', { name: 'Commande confirmée !' })
+  ).toBeVisible();
 });
